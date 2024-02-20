@@ -1,13 +1,40 @@
 package com.TPK.ReadExcel;
 
+import com.TPK.ReadExcel.modal.ColumnExcel;
+import com.TPK.ReadExcel.service.PoiExcelService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@RequiredArgsConstructor
 @SpringBootApplication
-public class ReadExcelApplication {
+public class ReadExcelApplication implements CommandLineRunner {
+
+	private final PoiExcelService poiExcelService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ReadExcelApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+
+		String path = "S:\\test.xlsx";
+		List<Integer> column = new ArrayList<>();
+		column.add(2);
+		column.add(6);
+		column.add(7);
+		Integer rowStart = 2;
+		Integer sheetStart = 1;
+
+		List<ColumnExcel> result = poiExcelService.readExcel(path, column,rowStart, sheetStart);
+		result.forEach(e -> {
+			System.out.println("column 1: " + e.column1() + " column 2: " + e.column2() + " column 3: " + e.column3());
+		});
 	}
 
 }
