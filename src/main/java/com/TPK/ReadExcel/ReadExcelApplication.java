@@ -1,6 +1,7 @@
 package com.TPK.ReadExcel;
 
 import com.TPK.ReadExcel.modal.ColumnExcel;
+import com.TPK.ReadExcel.service.JxlsExcelService;
 import com.TPK.ReadExcel.service.PoiExcelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +16,7 @@ import java.util.List;
 public class ReadExcelApplication implements CommandLineRunner {
 
 	private final PoiExcelService poiExcelService;
+	private final JxlsExcelService jxlsExcelService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ReadExcelApplication.class, args);
@@ -23,7 +25,7 @@ public class ReadExcelApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		String path = "S:\\test.xlsx";
+		String path = "S:\\Commu pack\\test.xls";
 		List<Integer> column = new ArrayList<>();
 		column.add(2);
 		column.add(6);
@@ -31,10 +33,15 @@ public class ReadExcelApplication implements CommandLineRunner {
 		Integer rowStart = 2;
 		Integer sheetStart = 1;
 
-		List<ColumnExcel> result = poiExcelService.readExcel(path, column,rowStart, sheetStart);
-		result.forEach(e -> {
+		// POI
+		List<ColumnExcel> resultPoi = poiExcelService.readExcel(path, column,rowStart, sheetStart);
+		resultPoi.forEach(e -> {
 			System.out.println("column 1: " + e.column1() + " column 2: " + e.column2() + " column 3: " + e.column3());
 		});
+
+		//Jxl
+		List<ColumnExcel> resultJxl = jxlsExcelService.readExcel(path, column,rowStart, sheetStart);
+		resultJxl.forEach(System.out::println);
 	}
 
 }
