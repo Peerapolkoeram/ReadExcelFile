@@ -1,6 +1,7 @@
 package com.TPK.ReadExcel;
 
 import com.TPK.ReadExcel.modal.ColumnExcel;
+import com.TPK.ReadExcel.service.FastExcelService;
 import com.TPK.ReadExcel.service.JxlsExcelService;
 import com.TPK.ReadExcel.service.PoiExcelService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class ReadExcelApplication implements CommandLineRunner {
 
 	private final PoiExcelService poiExcelService;
 	private final JxlsExcelService jxlsExcelService;
+	private final FastExcelService fastExcelService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ReadExcelApplication.class, args);
@@ -25,7 +27,7 @@ public class ReadExcelApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		String path = "S:\\Commu pack\\test.xls";
+		String path = "test.xlsx";
 		List<Integer> column = new ArrayList<>();
 		column.add(2);
 		column.add(6);
@@ -33,15 +35,19 @@ public class ReadExcelApplication implements CommandLineRunner {
 		Integer rowStart = 2;
 		Integer sheetStart = 1;
 
-		// POI
-		List<ColumnExcel> resultPoi = poiExcelService.readExcel(path, column,rowStart, sheetStart);
-		resultPoi.forEach(e -> {
-			System.out.println("column 1: " + e.column1() + " column 2: " + e.column2() + " column 3: " + e.column3());
-		});
+//		// POI
+//		List<ColumnExcel> resultPoi = poiExcelService.readExcel(path, column,rowStart, sheetStart);
+//		resultPoi.forEach(e -> {
+//			System.out.println("column 1: " + e.column1() + " column 2: " + e.column2() + " column 3: " + e.column3());
+//		});
+//
+//		// Jxl
+//		List<ColumnExcel> resultJxl = jxlsExcelService.readExcel(path, column,rowStart, sheetStart);
+//		resultJxl.forEach(System.out::println);
 
-		//Jxl
-		List<ColumnExcel> resultJxl = jxlsExcelService.readExcel(path, column,rowStart, sheetStart);
-		resultJxl.forEach(System.out::println);
+		// Fast
+		List<ColumnExcel> resultFast = fastExcelService.readExcel(path, column,rowStart, sheetStart);
+		resultFast.forEach(System.out::println);
 	}
 
 }
