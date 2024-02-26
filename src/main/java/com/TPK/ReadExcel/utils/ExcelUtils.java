@@ -1,11 +1,15 @@
 package com.TPK.ReadExcel.utils;
 
 import com.TPK.ReadExcel.modal.ColumnExcel;
+import org.dhatim.fastexcel.reader.ReadableWorkbook;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
+@Configuration
 public class ExcelUtils {
 
     public FileInputStream fileInputStream(String pathFile) {
@@ -26,6 +30,16 @@ public class ExcelUtils {
             System.out.println("No data");
         }
         return excelFile;
+    }
+
+    public ReadableWorkbook readableWorkbook (FileInputStream file) {
+        ReadableWorkbook readableWorkbook;
+        try {
+            readableWorkbook = new ReadableWorkbook(file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return readableWorkbook;
     }
 
 }

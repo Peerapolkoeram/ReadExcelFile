@@ -27,26 +27,24 @@ public class ReadExcelApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		String path = "test.xlsx";
+		String path = "FileTest/TestExcel.xlsx";
 		List<Integer> column = new ArrayList<>();
 		column.add(2);
-		column.add(6);
-		column.add(7);
+		column.add(3);
+		column.add(4);
 		Integer rowStart = 2;
-		Integer sheetStart = 1;
+		Integer sheetStart = 0;
 
-//		// POI
-//		List<ColumnExcel> resultPoi = poiExcelService.readExcel(path, column,rowStart, sheetStart);
-//		resultPoi.forEach(e -> {
-//			System.out.println("column 1: " + e.column1() + " column 2: " + e.column2() + " column 3: " + e.column3());
-//		});
-//
-//		// Jxl
-//		List<ColumnExcel> resultJxl = jxlsExcelService.readExcel(path, column,rowStart, sheetStart);
-//		resultJxl.forEach(System.out::println);
+		// POI
+		List<ColumnExcel> resultPoi = poiExcelService.readExcel(path, column,rowStart, sheetStart);
+		resultPoi.forEach(System.out::println);
+
+		// Jxl
+		List<ColumnExcel> resultJxl = jxlsExcelService.readExcel(path, column, rowStart, sheetStart);
+		resultJxl.forEach(System.out::println);
 
 		// Fast
-		List<ColumnExcel> resultFast = fastExcelService.readExcel(path, column,rowStart, sheetStart);
+		List<ColumnExcel> resultFast = fastExcelService.readExcel(path, column, rowStart, sheetStart);
 		resultFast.forEach(System.out::println);
 	}
 
