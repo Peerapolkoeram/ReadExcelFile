@@ -2,7 +2,7 @@ package com.TPK.ReadExcel.service;
 
 import com.TPK.ReadExcel.modal.ColumnExcel;
 import com.TPK.ReadExcel.utils.ExcelUtils;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PoiExcelService {
 
     private final ExcelUtils excelUtils;

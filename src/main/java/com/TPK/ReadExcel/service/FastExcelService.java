@@ -2,7 +2,7 @@ package com.TPK.ReadExcel.service;
 
 import com.TPK.ReadExcel.modal.ColumnExcel;
 import com.TPK.ReadExcel.utils.ExcelUtils;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.dhatim.fastexcel.reader.Cell;
 import org.dhatim.fastexcel.reader.ReadableWorkbook;
 import org.dhatim.fastexcel.reader.Row;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FastExcelService {
 
     private final ExcelUtils excelUtils;
