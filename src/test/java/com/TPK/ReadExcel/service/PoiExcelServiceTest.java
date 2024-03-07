@@ -15,18 +15,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
-class FastExcelServiceTest {
+class PoiExcelServiceTest {
 
     private String path;
     private List<Integer> column;
     private Integer rowStart;
     private Integer sheetStart;
+    private  ColumnExcel excel;
 
     @InjectMocks
     PoiExcelService poiExcelService;
@@ -40,6 +40,7 @@ class FastExcelServiceTest {
         column = Arrays.asList(2,3,4);
         rowStart = 2;
         sheetStart = 0;
+        excel = new ColumnExcel("1","2","3");
     }
 
     @Test
@@ -55,16 +56,17 @@ class FastExcelServiceTest {
     @Order(2)
     void poiExcel() throws IOException {
 
-        // Mock data
-        ColumnExcel excel = new ColumnExcel("1","2","3");
-        List<String> input = Collections.singletonList(String.valueOf(excel));
-
-        // Mock class excel utilc
+        // Mock class
         Mockito.when(excelUtils.fileInputStream(path)).thenReturn(new FileInputStream(path));
-        Mockito.when(excelUtils.addListDataToColumnExcel(input)).thenReturn(excel);
+        Mockito.when(excelUtils.addListDataToColumnExcel(Mockito.any())).thenReturn(excel);
 
-//        List<ColumnExcel> resultPoi = poiExcelService.readExcel(path, column,rowStart, sheetStart);
-//        assertEquals("1", resultPoi.get(0).column1());
+        // call service
+        List<ColumnExcel> resultPoi = poiExcelService.readExcel(path, column,rowStart, sheetStart);
+
+        // result
+        assertEquals("1", resultPoi.get(0).column1());
+        assertEquals("2", resultPoi.get(0).column2());
+        assertEquals("3", resultPoi.get(0).column3());
     }
 
 }
