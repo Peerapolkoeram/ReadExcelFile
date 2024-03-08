@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @ExtendWith(MockitoExtension.class)
 class PoiExcelServiceTest {
@@ -51,7 +52,7 @@ class PoiExcelServiceTest {
         column = List.of(2, 3, 4);
         rowStart = 2;
         sheetStart = 0;
-        excel = new ColumnExcel("1", "2", "3");
+        excel = new ColumnExcel("1", "1", "1");
 
         // crate excel file
         createFileExcelForTest(path);
@@ -79,8 +80,26 @@ class PoiExcelServiceTest {
 
         // result
         assertEquals("1", resultPoi.get(0).column1());
-        assertEquals("2", resultPoi.get(0).column2());
-        assertEquals("3", resultPoi.get(0).column3());
+        assertEquals("1", resultPoi.get(0).column2());
+        assertEquals("1", resultPoi.get(0).column3());
+    }
+
+    @Test
+    void verifyDataWhenReadingExcelDoesNotMatchExpectation() throws IOException {
+
+        String paths = pathFile.resolve(path).toString();
+
+        // Mock class
+        Mockito.when(excelUtils.fileInputStream(paths)).thenReturn(new FileInputStream(paths));
+        Mockito.when(excelUtils.addListDataToColumnExcel(Mockito.any())).thenReturn(excel);
+
+        // call service
+        List<ColumnExcel> resultPoi = poiExcelService.readExcel(paths, column, rowStart, sheetStart);
+
+        // result
+        assertNotEquals("2", resultPoi.get(0).column1());
+        assertNotEquals("2", resultPoi.get(0).column2());
+        assertNotEquals("2", resultPoi.get(0).column3());
     }
 
     void createFileExcelForTest(String fileName) throws IOException {
