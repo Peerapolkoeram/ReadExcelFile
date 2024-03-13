@@ -3,6 +3,7 @@ package com.TPK.ReadExcel.service;
 import com.TPK.ReadExcel.modal.ColumnExcel;
 import com.TPK.ReadExcel.utils.ExcelUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -21,7 +22,8 @@ public class PoiExcelService {
 
     private final ExcelUtils excelUtils;
 
-    public List<ColumnExcel> readExcel(String path, List<Integer> column, Integer rowStart, Integer sheetStart) throws IOException {
+    @SneakyThrows
+    public List<ColumnExcel> readExcel(String path, List<Integer> column, Integer rowStart, Integer sheetStart) {
         List<ColumnExcel> resultData = new ArrayList<>();
         // search filename
         FileInputStream file = excelUtils.fileInputStream(path);

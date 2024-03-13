@@ -6,6 +6,7 @@ import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -19,7 +20,8 @@ public class JxlsExcelService {
 
     private final ExcelUtils excelUtils;
 
-    public List<ColumnExcel> readExcel(String path, List<Integer> column, Integer rowStart, Integer sheetStart) throws BiffException, IOException {
+    @SneakyThrows
+    public List<ColumnExcel> readExcel(String path, List<Integer> column, Integer rowStart, Integer sheetStart) {
         List<ColumnExcel> resultExcel = new ArrayList<>();
         Workbook workbook = Workbook.getWorkbook(new File(path));
         Sheet sheet = workbook.getSheet(sheetStart);

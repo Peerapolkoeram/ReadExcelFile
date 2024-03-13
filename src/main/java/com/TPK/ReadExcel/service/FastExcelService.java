@@ -3,6 +3,7 @@ package com.TPK.ReadExcel.service;
 import com.TPK.ReadExcel.modal.ColumnExcel;
 import com.TPK.ReadExcel.utils.ExcelUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.dhatim.fastexcel.reader.Cell;
 import org.dhatim.fastexcel.reader.ReadableWorkbook;
 import org.dhatim.fastexcel.reader.Row;
@@ -10,7 +11,6 @@ import org.dhatim.fastexcel.reader.Sheet;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -21,7 +21,8 @@ public class FastExcelService {
 
     private final ExcelUtils excelUtils;
 
-    public List<ColumnExcel> readExcel(String path, List<Integer> column, Integer rowStart, Integer sheetStart) throws IOException {
+    @SneakyThrows
+    public List<ColumnExcel> readExcel(String path, List<Integer> column, Integer rowStart, Integer sheetStart) {
 
         List<ColumnExcel> resultExcel = new ArrayList<>();
         List<String> rowDataArr = new ArrayList<>();
