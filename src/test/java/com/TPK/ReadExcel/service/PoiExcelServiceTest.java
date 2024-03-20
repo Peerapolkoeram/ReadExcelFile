@@ -57,6 +57,25 @@ class PoiExcelServiceTest {
         createFileExcelForTest(path);
     }
 
+    static void createFileExcelForTest(String fileName) throws IOException {
+        pathFile = Files.createTempDirectory("tempDir");
+        try (Workbook workbook = new XSSFWorkbook()) {
+            // create sheet[0] => name: Sheet1
+            Sheet sheet = workbook.createSheet("Sheet1");
+            // start rows => 2
+            Row row = sheet.createRow(2);
+            // create column => 2,3,4
+            column.forEach(e -> {
+                Cell cell = row.createCell(e);
+                // set value = 1
+                cell.setCellValue(1);
+            });
+            try (FileOutputStream outputStream = new FileOutputStream(pathFile.resolve(fileName).toFile())) {
+                workbook.write(outputStream);
+            }
+        }
+    }
+
     @Test
     void checkMockData() {
         assertEquals("TestExcel.xlsx", path);
@@ -99,21 +118,6 @@ class PoiExcelServiceTest {
         assertNotEquals("2", resultPoi.get(0).column1());
         assertNotEquals("2", resultPoi.get(0).column2());
         assertNotEquals("2", resultPoi.get(0).column3());
-    }
-
-    static void createFileExcelForTest(String fileName) throws IOException {
-        pathFile = Files.createTempDirectory("tempDir");
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Sheet1");
-            Row row = sheet.createRow(2);
-            column.forEach(e -> {
-                Cell cell = row.createCell(e);
-                cell.setCellValue(1);
-            });
-            try (FileOutputStream outputStream = new FileOutputStream(pathFile.resolve(fileName).toFile())) {
-                workbook.write(outputStream);
-            }
-        }
     }
 
 }
