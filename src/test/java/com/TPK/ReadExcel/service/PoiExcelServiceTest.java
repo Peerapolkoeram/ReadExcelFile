@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
@@ -32,13 +32,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class PoiExcelServiceTest {
 
     @TempDir
-    private Path pathFile;
-
-    private String path;
-    private List<Integer> column;
-    private Integer rowStart;
-    private Integer sheetStart;
-    private ColumnExcel excel;
+    private static Path pathFile;
+    private static String path;
+    private static List<Integer> column;
+    private static Integer rowStart;
+    private static Integer sheetStart;
+    private static ColumnExcel excel;
 
     @InjectMocks
     private PoiExcelService poiExcelService;
@@ -46,8 +45,8 @@ class PoiExcelServiceTest {
     @Mock
     private ExcelUtils excelUtils;
 
-    @BeforeEach
-    void mockData() throws IOException {
+    @BeforeAll
+    static void mockData() throws IOException {
         path = "TestExcel.xlsx";
         column = List.of(2, 3, 4);
         rowStart = 2;
@@ -102,7 +101,7 @@ class PoiExcelServiceTest {
         assertNotEquals("2", resultPoi.get(0).column3());
     }
 
-    void createFileExcelForTest(String fileName) throws IOException {
+    static void createFileExcelForTest(String fileName) throws IOException {
         pathFile = Files.createTempDirectory("tempDir");
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Sheet1");
