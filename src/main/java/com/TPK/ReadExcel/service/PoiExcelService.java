@@ -12,7 +12,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +36,7 @@ public class PoiExcelService {
                     /* loop column arr */
                     for (int j : column) {
                         if (cell == (cell.getRow().getCell(j))) {
-                            switch (cell.getCellType()) {
-                                case STRING -> rowDataArr.add(cell.getRichStringCellValue().getString());
-                                case NUMERIC -> rowDataArr.add(String.valueOf((int) cell.getNumericCellValue()));
-                                case BOOLEAN -> rowDataArr.add(String.valueOf(cell.getBooleanCellValue()));
-                                default -> rowDataArr.add(null);
-                            }
+                            rowDataArr = getDataField(cell);
                         }
                     }
                 }
@@ -53,5 +47,16 @@ public class PoiExcelService {
             }
         }
         return resultData;
+    }
+
+    private List<String> getDataField(Cell cell) {
+        List<String> rowDataArr = new ArrayList<>();
+        switch (cell.getCellType()) {
+            case STRING -> rowDataArr.add(cell.getRichStringCellValue().getString());
+            case NUMERIC -> rowDataArr.add(String.valueOf((int) cell.getNumericCellValue()));
+            case BOOLEAN -> rowDataArr.add(String.valueOf(cell.getBooleanCellValue()));
+            default -> rowDataArr.add(null);
+        }
+        return rowDataArr;
     }
 }
