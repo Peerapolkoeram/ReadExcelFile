@@ -155,4 +155,10 @@ class PoiExcelServiceTest {
         System.out.println(arr.stream().anyMatch(a -> a.startsWith("G")));
     }
 
+    @Test
+    void TestParallelStream() {
+        List<String> arr = List.of("Test","Test2","Test3","Mount","And");
+        arr.parallelStream().forEach(System.out::println);
+    }
+
 }
