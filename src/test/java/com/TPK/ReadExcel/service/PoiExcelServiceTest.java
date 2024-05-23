@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
@@ -159,6 +160,11 @@ class PoiExcelServiceTest {
     void TestParallelStream() {
         List<String> arr = List.of("Test","Test2","Test3","Mount","And");
         arr.parallelStream().forEach(System.out::println);
+    }
+
+    @Test
+    void TestShortCircuit() {
+        System.out.println((10 < 100) ? "True":"False");
     }
 
 }
